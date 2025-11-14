@@ -8,7 +8,7 @@ COPY . .
 
 RUN ./gradlew shadowJar
 
-FROM base as runtime
+FROM base AS runtime
 
 EXPOSE 25565
 
