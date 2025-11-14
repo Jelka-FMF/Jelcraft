@@ -16,10 +16,10 @@ WORKDIR /server
 
 COPY --from=build /work/build/libs/Jelcraft-*-SNAPSHOT.jar /server/server.jar
 
-CMD [
-    "java",
-    "-Dminestom.chunk-view-distance=16",
-    "-Dminestom.entity-view-distance=16",
-    "-jar",
-    "/server/server.jar"
+CMD [ \
+    "java", \
+    "-Dminestom.chunk-view-distance=16", \
+    "-Dminestom.entity-view-distance=16", \
+    "-jar", \
+    "/server/server.jar" \
 ]
