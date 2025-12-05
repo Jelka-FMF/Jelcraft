@@ -11,6 +11,8 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import net.kyori.adventure.audience.Audience
+import net.kyori.adventure.resource.ResourcePackInfo
+import net.kyori.adventure.resource.ResourcePackRequest
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.format.NamedTextColor
@@ -32,6 +34,8 @@ import si.progklub.jelcraft.components.State
 import si.progklub.jelcraft.components.constructLights
 import si.progklub.jelcraft.utils.loadResourceBytes
 import si.progklub.jelcraft.utils.startEventListener
+import java.net.URI
+import java.util.UUID
 import kotlin.system.exitProcess
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -128,9 +132,23 @@ private fun initializeEvents(instanceContainer: InstanceContainer) {
     globalEventHandler.addListener(AsyncPlayerConfigurationEvent::class.java) { event ->
         logger.info { "Player ${event.player.username} (${event.player.uuid}) joined the game" }
 
+        // Connect the player to the instance
         event.spawningInstance = instanceContainer
         event.player.respawnPoint = Pos(Config.SPAWN_POINT_X, Config.SPAWN_POINT_Y, Config.SPAWN_POINT_Z)
         event.player.gameMode = GameMode.SPECTATOR
+
+        // Send the server resource if enabled
+        if (Config.RESOURCE_PACK_ENABLED) {
+            val resourcePackInfo =
+                ResourcePackInfo.resourcePackInfo(
+                    UUID.fromString(Config.RESOURCE_PACK_ID),
+                    URI.create(Config.RESOURCE_PACK_URL),
+                    Config.RESOURCE_PACK_HASH,
+                )
+
+            val resourcePackRequest = ResourcePackRequest.addingRequest(resourcePackInfo)
+            event.player.sendResourcePacks(resourcePackRequest)
+        }
     }
 
     // Send a welcome message to players
@@ -138,7 +156,7 @@ private fun initializeEvents(instanceContainer: InstanceContainer) {
         if (!event.isFirstSpawn) return@addListener
 
         // Send a static welcome message
-        event.player.sendMessage(description.decorate(TextDecoration.UNDERLINED))
+        event.player.sendMessage(description.decorate(TextDecoration.BOLD))
         event.player.sendMessage(Component.empty())
         event.player.sendMessage(
             Component
@@ -269,7 +287,9 @@ private fun sendPatternMessage(
     val nameText = pattern.name.ifBlank { pattern.identifier }
 
     var nameComponent = Component.text(nameText, NamedTextColor.YELLOW)
-    if (pattern.source?.isNotBlank() == true) nameComponent = nameComponent.clickEvent(ClickEvent.openUrl(pattern.source))
+    if (pattern.source?.isNotBlank() == true) {
+        nameComponent = nameComponent.clickEvent(ClickEvent.openUrl(pattern.source))
+    }
 
     val authorText =
         listOfNotNull(pattern.author?.ifBlank { null }, pattern.school?.ifBlank { null })

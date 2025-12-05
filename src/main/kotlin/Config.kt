@@ -1,5 +1,6 @@
 package si.progklub.jelcraft
 
+import si.progklub.jelcraft.utils.loadEnvironmentBoolean
 import si.progklub.jelcraft.utils.loadEnvironmentDouble
 import si.progklub.jelcraft.utils.loadEnvironmentFloat
 import si.progklub.jelcraft.utils.loadEnvironmentInt
@@ -93,4 +94,24 @@ object Config {
      * The URL of the repository displayed in the welcome message.
      */
     val WELCOME_MESSAGE_REPOSITORY: String = loadEnvironmentString("WELCOME_MESSAGE_REPOSITORY", "https://github.com/Jelka-FMF/Jelcraft")
+
+    /**
+     * Whether to enable the server resource pack.
+     */
+    val RESOURCE_PACK_ENABLED: Boolean = loadEnvironmentBoolean("RESOURCE_PACK_ENABLED", false)
+
+    /**
+     * The UUID of the server resource pack.
+     */
+    val RESOURCE_PACK_ID: String = loadEnvironmentString("RESOURCE_PACK_ID", "")
+
+    /**
+     * The URL of the server resource pack.
+     */
+    val RESOURCE_PACK_URL: String = loadEnvironmentString("RESOURCE_PACK_URL", "")
+
+    /**
+     * The SHA1 hash of the server resource pack.
+     */
+    val RESOURCE_PACK_HASH: String = loadEnvironmentString("RESOURCE_PACK_HASH", "")
 }
