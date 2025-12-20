@@ -259,8 +259,6 @@ private fun setupStatusStream(instanceContainer: InstanceContainer): Deferred<Un
 
 private fun setupDriverStream(): Deferred<Unit> =
     startEventListener(client, Config.SSE_DRIVER_URL) { event ->
-        if (event.event != "message") return@startEventListener
-
         val line = event.data?.trim()
         if (line == null || line[0] != '#') return@startEventListener
 
