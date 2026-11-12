@@ -51,6 +51,11 @@ object Config {
     val SPAWN_POINT_Z: Double = loadEnvironmentDouble("SPAWN_POINT_Z", -60.0)
 
     /**
+     * The number of players to display in the player list.
+     */
+    val PLAYER_SAMPLE_SIZE: Int = loadEnvironmentInt("PLAYER_SAMPLE_SIZE", 20)
+
+    /**
      * The server view distance.
      */
     val VIEW_DISTANCE: Int = loadEnvironmentInt("VIEW_DISTANCE", 16)
@@ -78,12 +83,12 @@ object Config {
     /**
      * The number of maximum reconnection attempts to the SSE server.
      */
-    val SSE_RECONNECTION_ATTEMPTS: Int = loadEnvironmentInt("SSE_RECONNECTION_ATTEMPTS", 10)
+    val SSE_RECONNECTION_ATTEMPTS: Int = loadEnvironmentInt("SSE_RECONNECTION_ATTEMPTS", 30)
 
     /**
      * The delay between reconnection attempts to the SSE server.
      */
-    val SSE_RECONNECTION_DELAY: Int = loadEnvironmentInt("SSE_RECONNECTION_DELAY", 1000)
+    val SSE_RECONNECTION_DELAY: Int = loadEnvironmentInt("SSE_RECONNECTION_DELAY", 2000)
 
     /**
      * The URL of the website displayed in the welcome message.

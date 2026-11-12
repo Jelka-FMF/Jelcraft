@@ -90,8 +90,9 @@ fun main() {
 
 private fun initializeInstance(instanceContainer: InstanceContainer) {
     // Set the time to midnight with a new moon
-    instanceContainer.time = 114000
-    instanceContainer.timeRate = 0
+    val clock = instanceContainer.defaultClock()
+    clock?.time(114000)
+    clock?.rate(0.0F)
 
     // Set the view distance
     instanceContainer.viewDistance(Config.VIEW_DISTANCE)
@@ -124,8 +125,13 @@ private fun initializeEvents(instanceContainer: InstanceContainer) {
                 .builder()
                 .favicon(favicon)
                 .description(description)
-                .playerInfo(onlinePlayers, maxPlayers)
-                .build()
+                .playerInfo(
+                    Status.PlayerInfo
+                        .builder(Status.PlayerInfo.online(Config.PLAYER_SAMPLE_SIZE))
+                        .onlinePlayers(onlinePlayers)
+                        .maxPlayers(maxPlayers)
+                        .build(),
+                ).build()
     }
 
     // Configure players when they join

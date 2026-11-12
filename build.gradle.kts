@@ -1,6 +1,6 @@
 plugins {
-    val kotlinVersion = "2.3.0-Beta2"
-    val shadowVersion = "8.3.0"
+    val kotlinVersion = "2.4.21"
+    val shadowVersion = "9.6.1"
 
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.serialization") version kotlinVersion
@@ -15,15 +15,15 @@ repositories {
 }
 
 dependencies {
-    val minestormVersion = "2025.10.31-1.21.10"
-    val slf4jVersion = "2.0.17"
-    val kotlinLoggingVersion = "7.0.3"
-    val kotlinxSerializationVersion = "1.9.0"
-    val kotlinxCoroutinesVersion = "1.7.3"
-    val ktorVersion = "3.3.2"
+    val minestomVersion = "2026.10.07-26.2"
+    val slf4jVersion = "2.0.20"
+    val kotlinLoggingVersion = "8.0.7"
+    val kotlinxSerializationVersion = "1.13.0"
+    val kotlinxCoroutinesVersion = "1.11.0"
+    val ktorVersion = "3.6.1"
 
     // Minestom
-    implementation("net.minestom:minestom:$minestormVersion")
+    implementation("net.minestom:minestom:$minestomVersion")
 
     // Logging
     implementation("org.slf4j:slf4j-api:$slf4jVersion")
